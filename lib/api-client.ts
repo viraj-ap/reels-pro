@@ -1,6 +1,6 @@
 import { IVideo } from "@/models/Video";
 
-export type VideoFormData = Omit<IVideo,"_id">
+export type VideoFormData = Omit<IVideo, "_id">;
 
 type FetchOptions = {
   method?: "GET" | "POST" | "PUT" | "DELETE";
@@ -26,29 +26,27 @@ class ApiClient {
     });
 
     if (!response.ok) {
-      throw new Error(await response.text());
+      const errorText = await response.text();
+      throw new Error(errorText || `HTTP error! status: ${response.status}`);
     }
 
     return response.json();
   }
 
-
-  async getVideos() {
+  async getVideos(): Promise<IVideo[]> {
     return this.fetch<IVideo[]>("videos");
   }
 
-  async getAVideos(id:string) {
+  async getVideo(id: string): Promise<IVideo> {
     return this.fetch<IVideo>(`videos/${id}`);
   }
 
-  async createVideo(videoData : VideoFormData ){
-    return this.fetch("videos",{
-        method : "POST",
-        body: videoData
-    })
+  async createVideo(videoData: VideoFormData): Promise<IVideo> {
+    return this.fetch<IVideo>("videos", {
+      method: "POST",
+      body: videoData
+    });
   }
-
-  
 }
 
 export const apiClient = new ApiClient();
