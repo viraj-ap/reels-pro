@@ -4,7 +4,7 @@ import { IKUpload } from "imagekitio-next";
 import { Loader2 } from "lucide-react";
 import { IKUploadResponse } from "imagekitio-next/dist/types/components/IKUpload/props";
 
-interface FileUpoladProps {
+interface FileUploadProps {
   onSuccess: (res: IKUploadResponse) => void;
   onProgress?: (progress: number) => void;
   fileType: "image" | "video";
@@ -17,7 +17,7 @@ export default function FileUpload({
   onSuccess,
   onProgress,
   fileType = "image",
-}: FileUpoladProps) {
+}: FileUploadProps) {
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
